@@ -27,6 +27,7 @@ float TankLevel = 0.0;  // Variable to Store Tank Level
 
 void setup() {
   // Begin serial communication at a baud rate of 9600:
+  delay (250);
   Serial.begin(9600);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
