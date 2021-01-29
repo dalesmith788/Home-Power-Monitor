@@ -36,6 +36,14 @@ while True:
     temp=mega_list[1]
     humidity=mega_list[4]
     tanklevel=mega_list[10]
+    ## Smooth tanklevel
+    ## fs = 1000  # Sampling frequency
+    # Generate the time vector properly
+    ## t = np.arange(1000) / fs
+    ## fc = 300  # Cut-off frequency of the filter
+    ## w = fc / (fs / 2) # Normalize the frequency
+    ## b, a = tanklevel.butter(5, w, 'low')
+    ## tanklevels = tanklevel.filtfilt(b, a, tanklevel)
     ## Print to Text File
     name_date = time.strftime("%d_%m_%Y")
     yname_date = datetime.strftime(datetime.now() - timedelta(1), "%d_%m_%Y")
@@ -46,7 +54,7 @@ while True:
         newfile.write("Consumption, Production, NetPower, Temp, Humidity, Tank Level, H:M:S\n")  # Header
         newfile.close()
         print(f"Writing to new file: {log_path}")
-    text_num = f"{cons_wnow}, {prod_wnow}, {enet_wnow}, {temp}, {humidity}, {tanklevel}, {time.strftime('%H:%M:%S')}" 
+    text_num = f"{cons_wnow}, {prod_wnow}, {enet_wnow}, {temp}, {humidity}, {tanklevel}, {time.strftime('%H:%M:%S')}"
     txt_file = open(log_path, "a")
     txt_file.write(f'{text_num}\n')
     txt_file.close()
