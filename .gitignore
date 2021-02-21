@@ -1,3 +1,4 @@
 logs/
 .vscode/
 nohup.out
+startup_script.sh
