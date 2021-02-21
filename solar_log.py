@@ -45,8 +45,8 @@ while True:
     ## b, a = tanklevel.butter(5, w, 'low')
     ## tanklevels = tanklevel.filtfilt(b, a, tanklevel)
     ## Print to Text File
-    name_date = time.strftime("%d_%m_%Y")
-    yname_date = datetime.strftime(datetime.now() - timedelta(1), "%d_%m_%Y")
+    name_date = time.strftime("%Y_%m_%d")
+    yname_date = datetime.strftime(datetime.now() - timedelta(1), "%Y_%m_%d")
     log_path = Path(f"logs/log_{name_date}.txt")
     # ylog_path = Path(f"Logs\solar_log_{yname_date}.txt")
     if not log_path.exists():  # Make a new file for a new date
