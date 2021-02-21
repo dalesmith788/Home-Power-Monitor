@@ -31,11 +31,15 @@ while True:
     cnet_wnow = cons_wnow - prod_wnow
 
     ## Data from Mega
-    mega_str = str((urllib.request.urlopen(mega).read().decode()).split('>')[2])[2:-5]
-    mega_list=mega_str.split(" ")
-    temp=mega_list[1]
-    humidity=mega_list[4]
-    tanklevel=mega_list[10]
+    try: # read from mega
+        mega_str = str((urllib.request.urlopen(mega).read().decode()).split('>')[2])[2:-5]
+        mega_list=mega_str.split(" ")
+        temp = mega_list[1]
+        humidity = mega_list[4]
+        tanklevel = mega_list[10]
+    except: # handle missing data if mega inaccessible
+        pass
+
     ## Smooth tanklevel
     ## fs = 1000  # Sampling frequency
     # Generate the time vector properly
@@ -44,6 +48,7 @@ while True:
     ## w = fc / (fs / 2) # Normalize the frequency
     ## b, a = tanklevel.butter(5, w, 'low')
     ## tanklevels = tanklevel.filtfilt(b, a, tanklevel)
+    
     ## Print to Text File
     name_date = time.strftime("%Y_%m_%d")
     yname_date = datetime.strftime(datetime.now() - timedelta(1), "%Y_%m_%d")
