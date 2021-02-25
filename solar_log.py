@@ -38,7 +38,9 @@ while True:
         humidity = mega_list[4]
         tanklevel = mega_list[10]
     except: # handle missing data if mega inaccessible
-        pass
+        temp = "00.0"
+        humidity = "00.0"
+        tanklevel = "00.0"
 
     ## Smooth tanklevel
     ## fs = 1000  # Sampling frequency
@@ -56,10 +58,10 @@ while True:
     # ylog_path = Path(f"Logs\solar_log_{yname_date}.txt")
     if not log_path.exists():  # Make a new file for a new date
         newfile = open(log_path, "w")
-        newfile.write("Consumption, Production, NetPower, Temp, Humidity, Tank Level, H:M:S\n")  # Header
+        newfile.write("H:M:S, Consumption, Production, NetPower, Temp, Humidity, Tank Level\n")  # Header
         newfile.close()
         print(f"Writing to new file: {log_path}")
-    text_num = f"{cons_wnow}, {prod_wnow}, {enet_wnow}, {temp}, {humidity}, {tanklevel}, {time.strftime('%H:%M:%S')}"
+    text_num = f"{time.strftime('%H:%M:%S')}, {cons_wnow}, {prod_wnow}, {enet_wnow}, {temp}, {humidity}, {tanklevel}"
     txt_file = open(log_path, "a")
     txt_file.write(f'{text_num}\n')
     txt_file.close()
