@@ -76,7 +76,7 @@ void loop() {
           // Read the temperature as Celsius:
           float t = dht.readTemperature();
           TankLevelRaw = analogRead(TankLvlIN);
-          TankLevel = ((TankLevelRaw-171)/682)*100
+          TankLevel = ((TankLevelRaw-171)/640)*100
 
           // Check if any reads failed and exit early (to try again):
           ;if (isnan(h) || isnan(t)) {
