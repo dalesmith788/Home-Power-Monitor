@@ -4,6 +4,7 @@
 #include <DHT.h>
 #include <SPI.h>
 #include <Ethernet.h>
+#include <MovingAverage.h>
 
 // Enter a MAC address and IP address for your controller below.
 // The IP address will be dependent on your local network:
@@ -11,6 +12,7 @@ byte mac[] = {
   0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED
 };
 IPAddress ip(10, 0, 0, 123);
+MovingAverage<float> TankArr(60, 0.00);
 
 // Initialize the Ethernet server library
 // with the IP address and port you want to use
@@ -22,8 +24,9 @@ EthernetServer server(80);
 // Initialize DHT sensor for normal 16mhz Arduino:
 DHT dht = DHT(DHTPIN, DHTTYPE);
 int TankLvlIN = A0; // Tank Level  input pin (0.1 to 5.0 Volt)
-float TankLevelRaw = 0.0;  // Variable to Store Tank Level
-float TankLevel = 0.0;  // Variable to Store Tank Level
+float TankLevelRaw = 0.00;  // Variable to Store Tank Level Raw
+float TankLevel = 0.00;  // Variable to Store Tank Level Calculated
+float TankAvg = 0.00;     // Variable for Average out of array
 
 void setup() {
   // Begin serial communication at a baud rate of 9600:
@@ -84,6 +87,8 @@ void loop() {
             client.stop();
             return;
           }
+          TankArr.push(TankLevel);
+          TankAvg = 
           client.print("Temperature: ");
           client.print(t);
           client.print(" DegC. Humidity: "); 
@@ -92,7 +97,8 @@ void loop() {
           client.print(TankLevelRaw);
           client.print(" ~x~ ");
           client.print(TankLevel);
-          client.print(" %.");
+          client.print(" %. ");
+          client.print(TankArr.get());
           client.println("<br />");
           client.println("</html>");
           break;
@@ -107,7 +113,7 @@ void loop() {
       }
     }
     // give the web browser time to receive the data
-    delay(1);
+    delay(60);
     // close the connection:
     client.stop();
     Serial.println("client disconnected");
